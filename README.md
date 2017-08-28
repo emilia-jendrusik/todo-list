@@ -1,4 +1,4 @@
-This is React project, communicating with YouTube API to provide Youtube search results.
+This is React project, providing simple way of managing daily tasks by To Do list. 
 
 
 ## Folder Structure
