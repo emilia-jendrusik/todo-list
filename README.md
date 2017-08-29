@@ -13,6 +13,12 @@ todo-list/
     components/ .js components
     index.css
 ```
+
+To install dependencies use:
+
+### `npm install`
+
+
 To start project use command:
 
 ### `npm start`
