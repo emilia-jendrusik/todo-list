@@ -10,10 +10,17 @@ body {
 .add-to-to-do {
 	margin-bottom: 30px;
 }
-.add-to-to-do .form-control {
+.add-to-to-do input.form-control {
 	border-radius: 4px 0 0 4px;
 	display: inline;
-    width: 60%;
+    width: 40%;
+}
+.add-to-to-do select.form-control {
+	border-radius: 0;
+	display: inline;
+    width: 20%;
+    height: 38px;
+    margin-left: -1px;
 }
 .add-to-to-do .btn {
 	border-radius: 0 4px 4px 0;
