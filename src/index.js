@@ -9,6 +9,7 @@ class App extends Component {
 		super(props);
 		this.addingHandler = this.addingHandler.bind(this);
 		this.removingHandler = this.removingHandler.bind(this);
+		this.movingHandler = this.movingHandler.bind(this);
 		this.state = {
 			toDoData: [
 				{daynum: 0, dayName: 'Monday', data: ['Meeting with Eric', 'Game with Daniel']}, 
@@ -21,6 +22,44 @@ class App extends Component {
 
 			]
 		}
+	}
+	movingHandler(dir, day, id, term) {
+		let newToDoData = this.state.toDoData.slice();
+		if(dir === 'up') {
+			if(id > 0) {
+				newToDoData[day].data.splice(id - 1, 0, term);
+				newToDoData[day].data.splice(id + 1, 1);
+			} else {
+				if(day === 0) {
+					return
+				} else {
+					let sibling = newToDoData[day - 1].data;
+					let siblingLength;
+					sibling ? siblingLength = sibling.length : siblingLength = 0;
+					newToDoData[day - 1].data.splice(siblingLength, 0, term);
+					newToDoData[day].data.splice(id, 1);
+				}
+
+			}
+		} else if (dir === 'down') {
+			if(newToDoData[day].data.length - 1 > id) {
+				newToDoData[day].data.splice(id, 1);
+				newToDoData[day].data.splice(id + 1, 0, term);
+			} else {
+				if(day === 6) {
+					return
+				} else {
+					let sibling = newToDoData[day + 1].data;
+					let siblingLength;
+					sibling ? siblingLength = sibling.length - 1 : siblingLength = 0;
+					newToDoData[day + 1].data.splice(siblingLength, 0, term);
+					newToDoData[day].data.splice(id, 1);
+				}
+			}
+		}
+		
+		this.setState({toDoData: newToDoData});
+		
 	}
 	addingHandler(term, select, selectNum) {
 		if(term.length) {
@@ -38,7 +77,7 @@ class App extends Component {
 		return (
 			<div className='container'>
 				<AddToToDo onClick={this.addingHandler} />
-				<ToDoList data={this.state.toDoData} onClick={this.removingHandler} />
+				<ToDoList data={this.state.toDoData} onClick={this.removingHandler} onMove={this.movingHandler} />
 			</div>
 		)
 	}
