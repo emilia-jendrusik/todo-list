@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ToDoListElement from './ToDoListElement';
+import ToDoListElement from '../components/ToDoListElement';
+import {connect} from 'react-redux';
 
 class ToDoList extends Component {
   render() {
@@ -26,4 +27,10 @@ class ToDoList extends Component {
   }
 }
 
-export default ToDoList;
+function mapStateToProps(state) {
+  return {
+    data: state.toDoData
+  }
+}
+
+export default connect(mapStateToProps)(ToDoList);

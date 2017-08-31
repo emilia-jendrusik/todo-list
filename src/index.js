@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import ToDoList from './components/ToDoList';
+import ToDoList from './containers/ToDoList';
 import AddToToDo from './components/AddToToDo';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import reducers from './reducers';
 
 class App extends Component {
 	constructor(props) {
@@ -10,18 +13,6 @@ class App extends Component {
 		this.addingHandler = this.addingHandler.bind(this);
 		this.removingHandler = this.removingHandler.bind(this);
 		this.movingHandler = this.movingHandler.bind(this);
-		this.state = {
-			toDoData: [
-				{daynum: 0, dayName: 'Monday', data: ['Meeting with Eric', 'Game with Daniel']}, 
-				{daynum: 1, dayName: 'Tuesday', data: ['Lunch with Anna']},
-				{daynum: 2, dayName: 'Wednesday', data: ['Cleaning up project folder']},
-				{daynum: 3, dayName: 'Thursday', data: []},
-				{daynum: 4, dayName: 'Friday', data: []},
-				{daynum: 5, dayName: 'Saturday', data: []},
-				{daynum: 6, dayName: 'Sunday', data: []},
-
-			]
-		}
 	}
 	movingHandler(dir, day, id, term) {
 		let newToDoData = this.state.toDoData.slice();
@@ -77,9 +68,14 @@ class App extends Component {
 		return (
 			<div className='container'>
 				<AddToToDo onClick={this.addingHandler} />
-				<ToDoList data={this.state.toDoData} onClick={this.removingHandler} onMove={this.movingHandler} />
+				<ToDoList onClick={this.removingHandler} onMove={this.movingHandler} />
 			</div>
 		)
 	}
 }
-ReactDOM.render(<App/>, document.getElementById('root'));
+const createStoreWithMiddleware = applyMiddleware()(createStore);
+ReactDOM.render(
+	<Provider store={createStoreWithMiddleware(reducers)}>
+		<App/>
+	</Provider>, 
+document.getElementById('root'));
