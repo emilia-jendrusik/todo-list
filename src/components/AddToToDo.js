@@ -3,19 +3,25 @@ import React, {Component} from 'react';
 class AddToToDo extends Component {
 	constructor(props) {
 		super(props);
+		this.handleChange = this.handleChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
+		this.state = {
+			term: ''
+		}
+	}
+	handleChange(e) {
+		this.setState({term: e.target.value});
 	}
 	handleClick() {
-		let inputEl = document.querySelector('.add-to-to-do input');
 		let selectEl = document.querySelector('.add-to-to-do select');
 		let selectElNum = parseInt(selectEl.options[selectEl.selectedIndex].getAttribute('data-daynum'), 16);
-		this.props.onClick(inputEl.value, selectEl.value, selectElNum);
-		inputEl.value = '';
+		this.props.onClick(this.state.term, selectEl.value, selectElNum);
+		document.querySelector('.add-to-to-do input').value = '';
 	}
 	render() {
 		return (
 			<div className='add-to-to-do'>
-				<input className='form-control' placeholder='New entry' />
+				<input className='form-control' placeholder='New entry' value={this.props.term} onChange={this.handleChange} />
 				<select className='form-control'>
 					<option data-daynum='0'>Monday</option>
 					<option data-daynum='1'>Tuesday</option>

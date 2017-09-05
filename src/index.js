@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './styles/index.css';
 import ToDoList from './containers/ToDoList';
 import AddToToDo from './components/AddToToDo';
 import {Provider} from 'react-redux';
