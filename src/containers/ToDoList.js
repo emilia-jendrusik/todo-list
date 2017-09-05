@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import ToDoListElement from '../components/ToDoListElement';
+import ToDoListElement from './ToDoListElement';
 import {connect} from 'react-redux';
 
 class ToDoList extends Component {
   render() {
     const toDoEls = this.props.data.map((toDoEl, i) => {
       const elText = toDoEl.data.map((elText, i) => {
-          return <ToDoListElement key={i} day={toDoEl.daynum} id={i} descr={elText} onClick={this.props.onClick} onMove={this.props.onMove} />
+          return <ToDoListElement key={i} day={toDoEl.daynum} id={i} descr={elText} onMove={this.props.onMove} />
       })
       const dayText = elText.length ? <h4>{toDoEl.dayName}</h4> : null;
       return (

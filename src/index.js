@@ -11,7 +11,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.addingHandler = this.addingHandler.bind(this);
-		this.removingHandler = this.removingHandler.bind(this);
+		//this.removingHandler = this.removingHandler.bind(this);
 		this.movingHandler = this.movingHandler.bind(this);
 	}
 	movingHandler(dir, day, id, term) {
@@ -59,16 +59,16 @@ class App extends Component {
 			this.setState({toDoData: newToDoData});
 		}
 	}
-	removingHandler(day, id) {
+	/*removingHandler(day, id) {
 		let newToDoData = this.state.toDoData.slice();
 		newToDoData[day].data.splice(id, 1);
 		this.setState({toDoData: newToDoData});
-	}
+	}*/
 	render() {
 		return (
 			<div className='container'>
 				<AddToToDo onClick={this.addingHandler} />
-				<ToDoList onClick={this.removingHandler} onMove={this.movingHandler} />
+				<ToDoList onMove={this.movingHandler} />
 			</div>
 		)
 	}
