@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {addingHandler} from '../actions/index';
+import {bindActionCreators} from 'redux';
 
 class AddToToDo extends Component {
 	constructor(props) {
@@ -15,7 +18,7 @@ class AddToToDo extends Component {
 	handleClick() {
 		let selectEl = document.querySelector('.add-to-to-do select');
 		let selectElNum = parseInt(selectEl.options[selectEl.selectedIndex].getAttribute('data-daynum'), 16);
-		this.props.onClick(this.state.term, selectEl.value, selectElNum);
+		this.props.addingHandler(this.state.term, selectEl.value, selectElNum);
 		document.querySelector('.add-to-to-do input').value = '';
 	}
 	render() {
@@ -37,4 +40,7 @@ class AddToToDo extends Component {
 	}
 }
 
-export default AddToToDo;
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({addingHandler: addingHandler}, dispatch);
+}
+export default connect(null, mapDispatchToProps)(AddToToDo);

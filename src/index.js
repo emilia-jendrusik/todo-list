@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.css';
 import ToDoList from './containers/ToDoList';
-import AddToToDo from './components/AddToToDo';
+import AddToToDo from './containers/AddToToDo';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import reducers from './reducers';
@@ -10,8 +10,6 @@ import reducers from './reducers';
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.addingHandler = this.addingHandler.bind(this);
-		//this.removingHandler = this.removingHandler.bind(this);
 		this.movingHandler = this.movingHandler.bind(this);
 	}
 	movingHandler(dir, day, id, term) {
@@ -52,22 +50,10 @@ class App extends Component {
 		this.setState({toDoData: newToDoData});
 		
 	}
-	addingHandler(term, select, selectNum) {
-		if(term.length) {
-			let newToDoData = this.state.toDoData.slice();
-			newToDoData[selectNum].data.splice(0, 0, term);
-			this.setState({toDoData: newToDoData});
-		}
-	}
-	/*removingHandler(day, id) {
-		let newToDoData = this.state.toDoData.slice();
-		newToDoData[day].data.splice(id, 1);
-		this.setState({toDoData: newToDoData});
-	}*/
 	render() {
 		return (
 			<div className='container'>
-				<AddToToDo onClick={this.addingHandler} />
+				<AddToToDo />
 				<ToDoList onMove={this.movingHandler} />
 			</div>
 		)
