@@ -1,4 +1,4 @@
-import {ELEMENT_DELETE, ELEMENT_ADD} from '../actions/index';
+import {ELEMENT_DELETE, ELEMENT_ADD, ELEMENT_MOVE} from '../actions/index';
 
 const initialData = [
 			{daynum: 0, dayName: 'Monday', data: ['Meeting with Eric', 'Game with Daniel']}, 
@@ -22,11 +22,51 @@ export default function(state = initialData, action) {
 			return newToDoData;
 		}
 	}
+	function movingHandler(dir, day, id, term) {
+		let newToDoData = state.slice();
+		if(dir === 'up') {
+			if(id > 0) {
+				newToDoData[day].data.splice(id - 1, 0, term);
+				newToDoData[day].data.splice(id + 1, 1);
+			} else {
+				if(day === 0) {
+					return
+				} else {
+					let sibling = newToDoData[day - 1].data;
+					let siblingLength;
+					sibling ? siblingLength = sibling.length : siblingLength = 0;
+					newToDoData[day - 1].data.splice(siblingLength, 0, term);
+					newToDoData[day].data.splice(id, 1);
+				}
+
+			}
+		} else if (dir === 'down') {
+			if(newToDoData[day].data.length - 1 > id) {
+				newToDoData[day].data.splice(id, 1);
+				newToDoData[day].data.splice(id + 1, 0, term);
+			} else {
+				if(day === 6) {
+					return
+				} else {
+					let sibling = newToDoData[day + 1].data;
+					let siblingLength;
+					sibling ? siblingLength = sibling.length - 1 : siblingLength = 0;
+					newToDoData[day + 1].data.splice(siblingLength, 0, term);
+					newToDoData[day].data.splice(id, 1);
+				}
+			}
+		}
+		
+		return newToDoData;
+		
+	}
 	switch(action.type) {
 		case ELEMENT_DELETE:
 			return removingHandler(action.payload.day, action.payload.id);
 		case ELEMENT_ADD:
 			return addingHandler(action.payload.term, action.payload.select, action.payload.selectNum);
+		case ELEMENT_MOVE:
+			return movingHandler(action.payload.dir, action.payload.day, action.payload.id, action.payload.term);
 		default: 
 			return state;
 	} 
